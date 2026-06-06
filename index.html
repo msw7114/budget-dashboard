@@ -209,6 +209,11 @@
     <div class="title"><div class="icon">₩</div><div>가계부 대시보드<small>지출 · 자산 누적 관리 · 추세 분석</small></div></div>
     <div class="savestate" id="savestate">·</div>
   </header>
+  <div class="help" style="margin:0 0 12px;font-size:11.5px;line-height:1.7">
+    <b>📌 꼭 알아두세요</b> — 입력한 모든 데이터는 <b>내 브라우저에만</b> 저장되며, 외부 서버로 전송되지 않아요.
+    브라우저 캐시/데이터 삭제 시 가계부도 사라지고, 다른 기기에선 데이터가 없어요.
+    <b>설정 탭에서 주기적으로 백업</b>해 주세요.
+  </div>
   <div class="tabs">
     <button class="tab active" data-v="overview">개요</button>
     <button class="tab" data-v="spending">지출</button>
@@ -279,6 +284,13 @@
     <div class="panel"><div class="phead">자산 계좌 설정</div><div class="pbody" id="settAs"></div></div>
     <div class="panel"><div class="phead">백업 · 복원</div><div class="pbody">
       <p class="muted" style="margin-bottom:12px">데이터는 이 브라우저에 자동 저장됩니다. 다른 기기로 옮기거나 안전하게 보관하려면 백업 파일을 내보내 두세요.</p>
+      <div class="help" style="margin-top:0;margin-bottom:14px">
+        <b>📌 꼭 알아두세요</b><br>
+        · 입력한 모든 데이터는 <b>내 브라우저에만</b> 저장되며, 외부 서버로 전송되지 않아요<br>
+        · <b>브라우저 캐시/데이터 삭제</b> 시 가계부 데이터도 함께 사라져요<br>
+        · <b>다른 기기나 브라우저</b>에서 접속하면 데이터가 없어요 (기기별 별도 저장)<br>
+        · 데이터를 안전하게 지키려면 <b>백업 내보내기를 주기적으로</b> 해주세요
+      </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn brass" id="bkExport">⬇ 백업 내보내기 (.json)</button>
         <button class="btn ghost" id="bkImportBtn">⬆ 백업 불러오기</button>
@@ -299,7 +311,9 @@
       <div>자산 현황을 추적하고 변화 추이 확인</div>
       <div>편한가계부 엑셀 자동 불러오기 지원</div>
       <div>카테고리와 계좌를 자유롭게 커스터마이징</div>
+      <div>모든 데이터는 내 브라우저에만 저장 — 서버 전송 없음</div>
     </div>
+    <p class="desc" style="font-size:11.5px;margin-bottom:20px;color:#94A3B8">⚠ 브라우저 데이터 삭제 시 가계부도 초기화됩니다. 설정 탭에서 주기적으로 백업해 주세요.</p>
     <div class="btns">
       <button class="btn primary" onclick="startApp(false)">기본 설정으로 시작하기</button>
       <button class="btn ghost" onclick="startApp(true)">카테고리부터 설정하기</button>
