@@ -17,7 +17,7 @@
     --blue:#2563EB; --blue-d:#1D4ED8; --blue-l:#EFF6FF; --blue-glow:rgba(37,99,235,.12);
     --green:#059669; --green-l:#ECFDF5; --red:#DC2626; --red-l:#FEF2F2;
     --amber:#D97706; --purple:#7C3AED;
-    --cash:#2563EB; --stock:#059669; --coin:#7C3AED;
+    --cash:#2563EB; --stock:#059669; --coin:#7C3AED; --realestate:#EA580C;
     --fixed:#3B82F6; --varc:#F59E0B; --pos:#059669; --neg:#DC2626;
     --shadow-sm:0 1px 2px rgba(15,23,42,.05); --shadow:0 1px 3px rgba(15,23,42,.08),0 1px 2px rgba(15,23,42,.04);
     --shadow-md:0 4px 6px rgba(15,23,42,.06),0 2px 4px rgba(15,23,42,.04); --shadow-lg:0 10px 15px rgba(15,23,42,.07);
@@ -217,7 +217,7 @@
   </div>
   <div class="tabs">
     <button class="tab active" data-v="overview">개요</button>
-    <button class="tab" data-v="spending">지출</button>
+    <button class="tab" data-v="spending">월별 입출금 내역</button>
     <button class="tab" data-v="assets">자산</button>
     <button class="tab" data-v="settings">설정</button>
   </div>
@@ -225,16 +225,13 @@
     <div class="cards" id="ovCards"></div>
     <div class="panel"><div class="phead">순자산 추이</div><div class="pbody"><div class="chartbox" id="chNet"></div>
       <div class="legend"><span><i style="background:var(--blue)"></i>순자산</span></div></div></div>
-    <div class="panel"><div class="phead">자산 예측 (단순 추세 추정)</div><div class="pbody"><div class="chartbox" id="chProj"></div>
-      <p class="muted" id="projNote" style="margin-top:6px"></p></div></div>
     <div class="panel"><div class="phead">월별 총지출 (고정·변동)</div><div class="pbody"><div class="chartbox" id="chSpend"></div>
       <div class="legend"><span><i style="background:var(--fixed)"></i>고정</span><span><i style="background:var(--varc)"></i>변동</span></div></div></div>
-    <div class="panel"><div class="phead">자산 비중 추이 (현금 · 주식 · 코인)</div><div class="pbody"><div class="chartbox" id="chAlloc"></div>
-      <div class="legend"><span><i style="background:var(--cash)"></i>현금</span><span><i style="background:var(--stock)"></i>주식</span><span><i style="background:var(--coin)"></i>코인</span></div></div></div>
+    <div class="panel"><div class="phead">자산 비중 추이 (현금 · 주식 · 코인 · 부동산)</div><div class="pbody"><div class="chartbox" id="chAlloc"></div>
+      <div class="legend"><span><i style="background:var(--cash)"></i>현금</span><span><i style="background:var(--stock)"></i>주식</span><span><i style="background:var(--coin)"></i>코인</span><span><i style="background:var(--realestate)"></i>부동산</span></div></div></div>
   </div>
   <div class="view" id="v-spending">
     <div class="panel">
-      <div class="phead">지출 입력</div>
       <div class="pbody">
         <div class="subtabs">
           <button class="subtab active" data-sv="spXlsx">편한가계부 불러오기</button>
@@ -266,23 +263,23 @@
         </div>
       </div>
     </div>
-    <div class="panel"><div class="phead">지출 이력</div><div class="pbody"><div id="spHist"></div></div></div>
+    <div class="panel"><div class="phead">월별 입출금 내역</div><div class="pbody"><div id="spHist"></div></div></div>
   </div>
   <div class="view" id="v-assets">
     <div class="saverow asmonthbar"><label class="mlab">기준 월</label><input type="month" id="asMonth">
       <button class="btn primary" id="asSave">이 달 이력에 저장</button>
       <span class="muted">달을 고르면 저장된 값을 불러와 수정할 수 있어요</span></div>
     <div class="grid2">
-      <div class="panel"><div class="phead">계좌 잔액 입력</div><div class="pbody" id="asForm"></div></div>
+      <div class="panel"><div class="phead">각 자산별 보유 금액 입력</div><div class="pbody" id="asForm"></div></div>
       <div><div class="panel"><div class="phead">계산 결과</div><div class="pbody" id="asResult"></div></div></div>
     </div>
     <div class="panel"><div class="phead">자산 비중 추이</div><div class="pbody"><div class="chartbox" id="chAsStack"></div>
-      <div class="legend"><span><i style="background:var(--cash)"></i>현금</span><span><i style="background:var(--stock)"></i>주식</span><span><i style="background:var(--coin)"></i>코인</span></div>
+      <div class="legend"><span><i style="background:var(--cash)"></i>현금</span><span><i style="background:var(--stock)"></i>주식</span><span><i style="background:var(--coin)"></i>코인</span><span><i style="background:var(--realestate)"></i>부동산</span></div>
       <div id="asHist" style="margin-top:16px"></div></div></div>
   </div>
   <div class="view" id="v-settings">
-    <div class="panel"><div class="phead">지출 카테고리 설정</div><div class="pbody" id="settSp"></div></div>
-    <div class="panel"><div class="phead">자산 계좌 설정</div><div class="pbody" id="settAs"></div></div>
+    <div class="panel"><div class="phead">월별 입출금 내역 카테고리 설정</div><div class="pbody" id="settSp"></div></div>
+    <div class="panel"><div class="phead">자산 설정</div><div class="pbody" id="settAs"></div></div>
     <div class="panel"><div class="phead">백업 · 복원</div><div class="pbody">
       <p class="muted" style="margin-bottom:12px">데이터는 이 브라우저에 자동 저장됩니다. 다른 기기로 옮기거나 안전하게 보관하려면 백업 파일을 내보내 두세요.</p>
       <div class="help" style="margin-top:0;margin-bottom:14px">
@@ -333,17 +330,19 @@ const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]
 const months=obj=>Object.keys(obj||{}).sort();
 const KEY='budget_dashboard_v2';
 const SP_META=[{id:'income',name:'수입'},{id:'save',name:'저축'},{id:'fixed',name:'고정지출'},{id:'var',name:'변동지출'}];
-const AS_TYPE_LABELS={cash_a:'가용 · 현금',stock_a:'가용 · 주식',crypto_a:'가용 · 코인',cash_l:'불용 · 현금',stock_l:'불용 · 주식',info:'정보만'};
+const AS_TYPE_LABELS={cash:'현금',stock:'주식',crypto:'코인',realestate:'부동산'};
+function typeLabel(t){if(!t)return'';if(t.startsWith('cash'))return'현금';if(t.startsWith('stock'))return'주식';if(t.startsWith('crypto'))return'코인';if(t.startsWith('realestate'))return'부동산';return AS_TYPE_LABELS[t]||t;}
 const PALETTE=['#2563EB','#059669','#7C3AED','#D97706','#DC2626','#0891B2','#4F46E5','#EA580C','#BE185D','#0D9488','#8B5CF6','#CA8A04','#16A34A','#E11D48'];
 const DEFAULT_CONFIG={
   sp:{income:['월급','부수입','상여금','기타'],save:['적금','CMA','연금저축','투자(주식)','청약','비상금','기타'],
     fixed:['월세/관리비','대출이자','공과금(가스/전기)','통신비','교통비(정기)','보험','구독(OTT/음악)','기타'],
     var:['식비','외식비','카페/음료','생활용품','교통비(택시)','의류/미용','의료비','여가/취미','경조사/선물','자기계발','여행','기타']},
-  as:[{name:'예적금',fields:[{label:'적금',key:'as_0',type:'cash_a'},{label:'자유입출금',key:'as_1',type:'cash_a'},{label:'CMA',key:'as_2',type:'cash_a'}]},
-    {name:'투자',fields:[{label:'연금저축',key:'as_3',type:'stock_l'},{label:'ISA',key:'as_4',type:'stock_a'},{label:'주식계좌',key:'as_5',type:'stock_a'}]},
-    {name:'암호화폐',fields:[{label:'코인',key:'as_6',type:'crypto_a'}]},
-    {name:'기타 자산',fields:[{label:'전세보증금',key:'as_7',type:'cash_l'},{label:'청약',key:'as_8',type:'cash_l'}]}],
-  asNextKey:9};
+  as:[{name:'예적금',fields:[{label:'적금',key:'as_0',type:'cash'},{label:'자유입출금',key:'as_1',type:'cash'},{label:'CMA',key:'as_2',type:'cash'}]},
+    {name:'투자',fields:[{label:'연금저축',key:'as_3',type:'stock'},{label:'ISA',key:'as_4',type:'stock'},{label:'주식계좌',key:'as_5',type:'stock'}]},
+    {name:'암호화폐',fields:[{label:'코인',key:'as_6',type:'crypto'}]},
+    {name:'부동산',fields:[{label:'아파트/주택',key:'as_9',type:'realestate'}]},
+    {name:'기타 자산',fields:[{label:'보증금',key:'as_7',type:'cash'},{label:'청약',key:'as_8',type:'cash'}]}],
+  asNextKey:10};
 // ===== state =====
 let DB;
 function load(){try{const s=localStorage.getItem(KEY);if(s){DB=JSON.parse(s);if(!DB.config)DB.config=JSON.parse(JSON.stringify(DEFAULT_CONFIG));return;}}catch(e){}DB=null;}
@@ -435,30 +434,27 @@ function asOnInput(inp){const k=inp.dataset.k,f=allAsFields().find(x=>x.key===k)
   inp.value=f2;let seen=0,pos=f2.length;for(let i=0;i<f2.length;i++){if(/\d/.test(f2[i]))seen++;if(seen===b){pos=i+1;break;}}if(b===0)pos=0;
   inp.setSelectionRange(pos,pos);asV[k]=d===''?undefined:Number(d);asCompute();}
 function asNum(k){const x=asV[k];return(typeof x==='number'&&!isNaN(x))?x:0;}
-function asCalc(inp){let av=0,lk=0,cR=0,sR=0,crR=0;
-  allAsFields().forEach(f=>{const v=inp[f.key]||0,t=f.type;if(t==='info')return;
-    if(t.endsWith('_a'))av+=v;else if(t.endsWith('_l'))lk+=v;
-    if(t.startsWith('cash'))cR+=v;else if(t.startsWith('stock'))sR+=v;else if(t.startsWith('crypto'))crR+=v;});
-  const total=av+lk,rt=cR+sR+crR;return{avail:av,unavail:lk,total,pc:rt?cR/rt:0,ps:rt?sR/rt:0,pb:rt?crR/rt:0};}
+function asCalc(inp){let total=0,cR=0,sR=0,crR=0,reR=0;
+  allAsFields().forEach(f=>{const v=inp[f.key]||0,t=f.type;total+=v;
+    if(t==='cash'||t==='cash_a'||t==='cash_l')cR+=v;else if(t==='stock'||t==='stock_a'||t==='stock_l')sR+=v;else if(t==='crypto'||t==='crypto_a')crR+=v;else if(t==='realestate')reR+=v;});
+  const rt=cR+sR+crR+reR;return{total,pc:rt?cR/rt:0,ps:rt?sR/rt:0,pb:rt?crR/rt:0,pr:rt?reR/rt:0};}
 function curInputs(){const o={};allAsFields().forEach(f=>{o[f.key]=asNum(f.key);});return o;}
 function asCompute(){const v=curInputs(),c=asCalc(v);
-  $('asResult').innerHTML=`<div class="cards" style="grid-template-columns:1fr 1fr">
-    <div class="scard"><div class="lab">가용 자산</div><div class="val" style="color:var(--blue)">${won(c.avail)}</div></div>
-    <div class="scard"><div class="lab">불용 자산</div><div class="val">${won(c.unavail)}</div></div></div>
+  $('asResult').innerHTML=`
     <div class="scard" style="background:linear-gradient(135deg,var(--blue),#6366F1);margin-bottom:10px"><div class="lab" style="color:rgba(255,255,255,.7)">자산 총액</div><div class="val" style="color:#fff;font-size:22px">${won(c.total)}</div></div>
     <div style="margin:6px 0 2px"><div style="display:flex;height:24px;border-radius:8px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.1)">
-      <span style="background:var(--cash);width:${c.pc*100}%"></span><span style="background:var(--stock);width:${c.ps*100}%"></span><span style="background:var(--coin);width:${c.pb*100}%"></span></div></div>
-    <div class="legend"><span><i style="background:var(--cash)"></i>현금 ${pct(c.pc)}</span><span><i style="background:var(--stock)"></i>주식 ${pct(c.ps)}</span><span><i style="background:var(--coin)"></i>코인 ${pct(c.pb)}</span></div>`;asV._calc=c;}
+      <span style="background:var(--cash);width:${c.pc*100}%"></span><span style="background:var(--stock);width:${c.ps*100}%"></span><span style="background:var(--coin);width:${c.pb*100}%"></span><span style="background:var(--realestate);width:${c.pr*100}%"></span></div></div>
+    <div class="legend"><span><i style="background:var(--cash)"></i>현금 ${pct(c.pc)}</span><span><i style="background:var(--stock)"></i>주식 ${pct(c.ps)}</span><span><i style="background:var(--coin)"></i>코인 ${pct(c.pb)}</span><span><i style="background:var(--realestate)"></i>부동산 ${pct(c.pr)}</span></div>`;asV._calc=c;}
 function asLoadMonth(m){const a=DB.assets[m];asV={};$('asForm').querySelectorAll('input[data-k]').forEach(inp=>{const k=inp.dataset.k,f=allAsFields().find(x=>x.key===k),
   ir=f&&(f.label.includes('금리')||f.label.includes('%'));if(!a||!a.inputs){inp.value='';return;}
   const v=a.inputs[k];if(v!=null&&!isNaN(v)){if(ir){inp.value=String(v);asV[k]=v;}else{inp.value=Number(v).toLocaleString('en-US');asV[k]=v;}}else inp.value='';});asCompute();}
 function asHist(){const ms=months(DB.assets),host=$('asHist');
   if(!ms.length){host.innerHTML='<p class="muted">아직 저장된 달이 없어요.</p>';allocChart($('chAsStack'),[]);return;}
-  allocChart($('chAsStack'),ms.map(m=>({x:m,pc:DB.assets[m].pc,ps:DB.assets[m].ps,pb:DB.assets[m].pb})));
-  let h='<table class="hist"><tr><th>월</th><th>총액</th><th>전월 대비</th><th>가용</th><th>불용</th><th></th></tr>';
+  allocChart($('chAsStack'),ms.map(m=>({x:m,pc:DB.assets[m].pc,ps:DB.assets[m].ps,pb:DB.assets[m].pb,pr:DB.assets[m].pr||0})));
+  let h='<table class="hist"><tr><th>월</th><th>총액</th><th>전월 대비</th><th></th></tr>';
   ms.slice().reverse().forEach(m=>{const a=DB.assets[m],i=ms.indexOf(m),prev=i>0?DB.assets[ms[i-1]]:null,dn=prev?a.total-prev.total:null;
     const chg=dn==null?'<span class="muted2">·</span>':`<span class="${dn>=0?'up':'down'}">${dn>=0?'▲ +':'▼ '}${fmt(Math.abs(dn))}</span>`;
-    h+=`<tr class="row"><td>${m}</td><td>${fmt(a.total)}</td><td>${chg}</td><td>${fmt(a.avail)}</td><td>${fmt(a.unavail)}</td><td><span class="delx" onclick="delMonth('assets','${m}')">✕</span></td></tr>`;});
+    h+=`<tr class="row"><td>${m}</td><td>${fmt(a.total)}</td><td>${chg}</td><td><span class="delx" onclick="delMonth('assets','${m}')">✕</span></td></tr>`;});
   h+='</table>';host.innerHTML=h;}
 window.toggleDet=id=>{const e=$('det-'+id);if(e)e.classList.toggle('open');};
 window.delMonth=(k,m)=>{if(!confirm(`${m} 데이터를 삭제할까요?`))return;delete DB[k][m];save();renderAll();};
@@ -481,8 +477,8 @@ function stackChart(el,data,segs,yfmt,ystep){const W=900,H=300,pl=74,pr=22,pt=20
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H}"><rect x="${pl}" y="${pt}" width="${W-pl-pr}" height="${H-pt-pb}" fill="${CV('--card2')}" rx="4"/>${g}${b}</svg>`;}
 function allocChart(el,data){const W=900,H=330,pl=22,pr=22,pt=18,pb=38;if(!data.length){el.innerHTML='';return;}
   const n=data.length,bw=(W-pl-pr)/n*.74,X=i=>pl+(W-pl-pr)*(i+.5)/n,top=pt,bot=H-pb;
-  let bars='',labels='';const cols={pc:CV('--cash'),ps:CV('--stock'),pb:CV('--coin')};
-  data.forEach((d,i)=>{const x=X(i);let acc=0;['pc','ps','pb'].forEach(k=>{const frac=d[k]||0,h=(bot-top)*frac,y=bot-acc-h;
+  let bars='',labels='';const cols={pc:CV('--cash'),ps:CV('--stock'),pb:CV('--coin'),pr:CV('--realestate')};
+  data.forEach((d,i)=>{const x=X(i);let acc=0;['pc','ps','pb','pr'].forEach(k=>{const frac=d[k]||0,h=(bot-top)*frac,y=bot-acc-h;
     bars+=`<rect x="${x-bw/2}" y="${y}" width="${bw}" height="${h}" fill="${cols[k]}" rx="3"/>`;
     const fs=k==='pb'?11.5:15,mH=k==='pb'?14:17;
     if(h>mH)labels+=`<text x="${x}" y="${y+h/2+fs*.36}" text-anchor="middle" font-size="${fs}" font-weight="600" fill="#fff" font-family="var(--mono)">${(frac*100).toFixed(0)}%</text>`;
@@ -539,20 +535,15 @@ function card(lab,val,cls,chg){return`<div class="scard"><div class="lab">${lab}
 function overview(){const am=months(DB.assets),sm=months(DB.spending),cards=$('ovCards');let h='';
   if(am.length){const last=DB.assets[am[am.length-1]],prev=am.length>1?DB.assets[am[am.length-2]]:null,dn=prev?last.total-prev.total:null;
     h+=card('순자산 (최신)',won(last.total),dn==null?'':(dn>=0?'pos':'neg'),dn==null?'':(dn>=0?'▲ +'+fmt(dn):'▼ '+fmt(dn)));
-    h+=card('가용 자산',won(last.avail));
-    const al=[['현금',last.pc],['주식',last.ps],['코인',last.pb]].sort((a,b)=>b[1]-a[1]);
-    h+=card('자산 비중',`${al[0][0]} ${pct(al[0][1])}`,'',`${al[1][0]} ${pct(al[1][1])} · ${al[2][0]} ${pct(al[2][1])}`);}
+    const al=[['현금',last.pc],['주식',last.ps],['코인',last.pb],['부동산',last.pr||0]].sort((a,b)=>b[1]-a[1]);
+    h+=card('자산 비중',`${al[0][0]} ${pct(al[0][1])}`,'',`${al[1][0]} ${pct(al[1][1])} · ${al[2][0]} ${pct(al[2][1])} · ${al[3][0]} ${pct(al[3][1])}`);}
   if(sm.length){const d=DB.spending[sm[sm.length-1]],inc=sum(d.income),sav=sum(d.save),fx=sum(d.fixed),vr=sum(d.var);
     h+=card(`이번 달 총지출 (${sm[sm.length-1]})`,won(fx+vr),'',`저축률 ${pct(inc?sav/inc:0)}`);}
-  cards.innerHTML=h||'<p class="muted">아직 데이터가 없어요. 지출이나 자산 탭에서 데이터를 입력해 보세요.</p>';
+  cards.innerHTML=h||'<p class="muted" style="white-space:nowrap">아직 데이터가 없어요. 월별 입출금 내역이나 자산 탭에서 데이터를 입력해 보세요.</p>';
   const ns=[];am.forEach(m=>ns.push({x:m,y:DB.assets[m].total}));
   multiLine($('chNet'),[{name:'순자산',color:CV('--blue'),points:ns}]);
   stackChart($('chSpend'),sm.map(m=>({x:m,parts:{fixed:sum(DB.spending[m].fixed),var:sum(DB.spending[m].var)}})),[['fixed',CV('--fixed')],['var',CV('--varc')]],null,500000);
-  allocChart($('chAlloc'),am.map(m=>({x:m,pc:DB.assets[m].pc,ps:DB.assets[m].ps,pb:DB.assets[m].pb})));
-  if(am.length>=2){const last=DB.assets[am[am.length-1]].total,first=DB.assets[am[0]].total,pm=(last-first)/(am.length-1);
-    const proj=[{x:'현재',y:last}];for(let y=1;y<=5;y++)proj.push({x:y+'년 후',y:last+pm*12*y});
-    projChart($('chProj'),proj,CV('--purple'));$('projNote').innerHTML=`최근 ${am.length}개월 평균 증가액 <b>월 ${won(pm)}</b> 기준 단순 추정이에요.`;
-  }else{projChart($('chProj'),[]);$('projNote').textContent='예측하려면 자산 데이터가 2개월 이상 필요해요.';}}
+  allocChart($('chAlloc'),am.map(m=>({x:m,pc:DB.assets[m].pc,ps:DB.assets[m].ps,pb:DB.assets[m].pb,pr:DB.assets[m].pr||0})));}
 // ===== settings =====
 function settingsRender(){settingsSpRender();settingsAsRender();}
 function settingsSpRender(){let h='';SP_META.forEach(bl=>{
@@ -566,7 +557,7 @@ window.settSpDel=function(bid,idx){const nm=cfg().sp[bid][idx];if(!confirm(`'${n
   cfg().sp[bid].splice(idx,1);save();settingsSpRender();spBuildManualForm();showToast(nm+' 삭제됨');};
 function settingsAsRender(){let h='';cfg().as.forEach((sec,si)=>{
   h+=`<div class="as-sec-head"><span>${esc(sec.name)}</span><button class="btn ghost" style="padding:3px 8px;font-size:11px" onclick="settAsDelSec(${si})">삭제</button></div>`;
-  sec.fields.forEach((f,fi)=>{h+=`<div class="as-field-row"><span class="fl">${esc(f.label)}</span><span class="ft">${AS_TYPE_LABELS[f.type]||f.type}</span><span class="delx" onclick="settAsDelField(${si},${fi})">✕</span></div>`;});
+  sec.fields.forEach((f,fi)=>{h+=`<div class="as-field-row"><span class="fl">${esc(f.label)}</span><span class="ft">${typeLabel(f.type)}</span><span class="delx" onclick="settAsDelField(${si},${fi})">✕</span></div>`;});
   h+=`<div class="addrow" style="margin:6px 0 12px"><input id="asf-name-${si}" placeholder="계좌명"><select id="asf-type-${si}">`;
   for(const[k,v]of Object.entries(AS_TYPE_LABELS))h+=`<option value="${k}">${v}</option>`;
   h+=`</select><button class="btn ghost" style="padding:5px 10px;font-size:12px" onclick="settAsAddField(${si})">추가</button></div>`;});
@@ -603,7 +594,7 @@ $('spSave').addEventListener('click',()=>{const m=$('spMonth').value;if(!m){aler
 $('spManSave').addEventListener('click',spManualSave);
 $('spManLoad').addEventListener('click',()=>{const m=$('spManMonth').value;if(m)spManualLoad(m);});
 $('asSave').addEventListener('click',()=>{const m=$('asMonth').value;if(!m){alert('달을 선택하세요.');return;}
-  const v=curInputs(),c=asCalc(v);DB.assets[m]={inputs:v,avail:c.avail,unavail:c.unavail,total:c.total,pc:c.pc,ps:c.ps,pb:c.pb};save();renderAll();showToast(m+' 자산 저장됨');});
+  const v=curInputs(),c=asCalc(v);DB.assets[m]={inputs:v,total:c.total,pc:c.pc,ps:c.ps,pb:c.pb,pr:c.pr};save();renderAll();showToast(m+' 자산 저장됨');});
 $('asMonth').addEventListener('change',()=>asLoadMonth($('asMonth').value));
 $('bkExport').addEventListener('click',()=>{const bl=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=`가계부백업_${new Date().toISOString().slice(0,10)}.json`;a.click();});
